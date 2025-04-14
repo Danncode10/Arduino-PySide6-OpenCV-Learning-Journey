@@ -1,0 +1,64 @@
+# === macOS System Files ===
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+*.sqlite3
+*.db
+*.ipynb_checkpoints
+
+# If using virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# === Qt Designer Generated Files ===
+*.ui~
+
+# === VS Code ===
+.vscode/
+*.code-workspace
+
+# === PyInstaller ===
+*.spec
+
+# === Arduino Build Files ===
+*.hex
+*.elf
+*.bin
+*.eep
+*.map
+*.d
+*.o
+*.a
+*.lst
+
+# Arduino backup files
+*.bak
+
+# Arduino IDE
+.arduino15/
+*.ino.*
+*.cpp.*
+*.ino.cpp
+
+# === Logs ===
+*.log
+
+# === Others ===
+*.swp
+*.swo
