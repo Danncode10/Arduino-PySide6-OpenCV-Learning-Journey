@@ -1,4 +1,4 @@
-# Arduino + PySide6 + OpenCV Learning Journey
+# Arduino + PySide6 + OpenCV For Computer Vision
 
 This repository documents my personal learning journey as I integrate **Arduino**, **PySide6 (Qt Designer)**, and **OpenCV** to build gesture-controlled hardware projects.
 
