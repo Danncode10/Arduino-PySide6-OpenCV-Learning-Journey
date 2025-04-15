@@ -191,4 +191,4 @@ Exactly! You've got the core ideas perfectly. Here's a quick summary of what you
 
 ---
 
-Let me know when you're ready to tackle **Lesson 3: PySide6 GUI to Control Arduino** — we’ll bring in buttons and make your software feel *real*. 💡
+Up Next **Lesson 3: PySide6 GUI to Control Arduino** — we’ll bring in buttons and make your software feel *real*. 💡

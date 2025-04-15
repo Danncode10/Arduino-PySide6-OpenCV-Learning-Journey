@@ -22,4 +22,14 @@ while True:
     if answer == 'stop':  # If user types 'stop', exit the loop
         break
 
+
+
+# while True:
+#     num = '1'
+#     send_command(num)
+#     time.sleep(1)
+#     num = '0'
+#     send_command(num)
+#     time.sleep(1)
+
 time.sleep(1)  # Wait a bit before the script ends
