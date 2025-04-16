@@ -11,9 +11,9 @@
 </div>
 
 
-## 🟨 **1. Arduino Code: `led_rgb_buzzer.ino`**
+## 🟨 **1. Arduino Code: 
 
-📍 Save this in: `arduino/sketches/L4_extended_gui_for_more_concept/L4_extended_gui_for_more_concept.ino`
+`arduino/sketches/L4_extended_gui_for_more_concept/L4_extended_gui_for_more_concept.ino`
 
 ```cpp
 const int led = 13;
@@ -161,9 +161,9 @@ This creates a **beep-beep** effect!
 
 ---
 
-## 🖥️ **2. PySide6 Python GUI: `lesson4_extended_gui.py`**
+## 🖥️ **2. PySide6 Python GUI: 
 
-📍 Save this in: `python/gui/lesson4_extended_gui.py`
+📍 Save this in: `python/gui/Lesson4/main.py`
 
 ```python
 from PySide6.QtWidgets import QApplication, QMainWindow
