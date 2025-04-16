@@ -44,3 +44,8 @@ Got it! Here's the **short and sweet version of Lesson 4** with just the **most 
 - LED: `LED,on\n` or `LED,off\n`
 - RGB: `RGB,255,0,128\n`
 - Buzzer: `BUZ,off\n`, `BUZ,beep\n`, `BUZ,alarm\n`
+
+#### Lesosn 4.1 Activity, Servo Motors
+- `Serial.parseInt()` reads the full number sent from Python.
+- `constrain(angle, 0, 180)` ensures angle stays within safe limits.
+- `Serial.println()` is helpful for debugging in the Serial Monitor.
