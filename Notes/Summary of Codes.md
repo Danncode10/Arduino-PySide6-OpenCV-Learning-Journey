@@ -21,3 +21,26 @@
 - `arduino.write(b'1')`: Sends a byte (`'1'` or `'0'`) to control the LED from Python.  
 - `time.sleep(2)`: Waits 2 seconds to let the Arduino finish resetting before sending data.
 
+Got it! Here's the **short and sweet version of Lesson 4** with just the **most important commands and concepts**:
+
+### **Lesson 4: Extend GUI for More Controls**
+
+####  Arduino (Important Commands)
+- `Serial.readStringUntil('\n')`: Read full line from Python.
+- `data.startsWith("RGB")`: Check if command is for RGB.
+- `data.indexOf(',')`: Find comma positions to split values.
+- `data.substring(...).toInt()`: Extract RGB values from string.
+- `analogWrite(pin, value)`: Set brightness/tone (RGB & buzzer).
+- `digitalWrite(pin, HIGH/LOW)`: Turn LED on/off.
+
+####  Python (Important Concepts)
+- `slider.value()`: Get RGB value from GUI.
+- `cmd = f"RGB,{r},{g},{b}"`: Format RGB command string.
+- `arduino.write(cmd.encode())`: Send command to Arduino.
+- `.currentTextChanged.connect(...)`: Dropdown signal for buzzer.
+- `.actionTriggered.connect(...)`: Slider signal for RGB.
+
+####  Serial Commands to Send
+- LED: `LED,on\n` or `LED,off\n`
+- RGB: `RGB,255,0,128\n`
+- Buzzer: `BUZ,off\n`, `BUZ,beep\n`, `BUZ,alarm\n`
