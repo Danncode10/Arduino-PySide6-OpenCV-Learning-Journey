@@ -51,7 +51,7 @@ app.exec()
 
 ---
 
-### ✅ Arduino Sketch (`servo.ino`)
+### ✅ Arduino Sketch (`/arduino/sketches/L4_Activity_servo/L4_Activity_servo.ino`)
 
 ```cpp
 #include <Servo.h>
