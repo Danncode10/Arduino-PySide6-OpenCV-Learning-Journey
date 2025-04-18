@@ -212,13 +212,6 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 ```
----
-
-### Expected Result:
-
-<div align="center">
-  <img src="img/L5_1.png" alt="My Arduino" width="800"/>
-</div>
 
 ---
 
