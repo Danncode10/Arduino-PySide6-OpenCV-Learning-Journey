@@ -21,8 +21,6 @@
 - `arduino.write(b'1')`: Sends a byte (`'1'` or `'0'`) to control the LED from Python.  
 - `time.sleep(2)`: Waits 2 seconds to let the Arduino finish resetting before sending data.
 
-Got it! Here's the **short and sweet version of Lesson 4** with just the **most important commands and concepts**:
-
 ### **Lesson 4: Extend GUI for More Controls**
 
 ####  Arduino (Important Commands)
@@ -49,3 +47,33 @@ Got it! Here's the **short and sweet version of Lesson 4** with just the **most 
 - `Serial.parseInt()` reads the full number sent from Python.
 - `constrain(angle, 0, 180)` ensures angle stays within safe limits.
 - `Serial.println()` is helpful for debugging in the Serial Monitor.
+
+
+### **Lesson 4 Activity 2: Distance Sensor GUI**
+
+#### 🔧 Arduino Code (Key Parts)
+
+- `trigPin = OUTPUT`, `echoPin = INPUT`: Trig sends sound, Echo listens.  
+- `digitalWrite(trigPin, HIGH); delayMicroseconds(10);`: Triggers a 10μs pulse.  
+- `pulseIn(echoPin, HIGH)`: Measures time until echo is received.  
+- `distance = duration * 0.034 / 2;`: Converts time to cm.  
+- `Serial.println(distance);`: Sends distance to Python via USB.
+
+---
+
+#### 🐍 Python Code (PySide6 + Serial)
+
+- `serial.Serial(...)`: Connect to Arduino.  
+- `arduino.in_waiting`: Checks if Arduino sent data.  
+- `arduino.readline().decode().strip()`: Reads and cleans distance value.
+
+---
+
+#### 🖥 GUI Logic (PySide6)
+
+- `QTimer()`: Repeats an action on a schedule.  
+- `timeout.connect(func)`: Runs a function every tick.  
+- `timer.start(100)`: Updates distance every 100ms.  
+- `label.setText(...)`: Displays live distance in the GUI.
+
+---
