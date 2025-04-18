@@ -115,3 +115,12 @@
 
 - **Show Everything**:  
   Finally, display the updated frame with `cv2.imshow("Webcam", frame)`.
+---
+
+### Lesson 6: Color Detection
+- `cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)`: Convert frame to HSV.
+- Define two red ranges using `np.array([H, S, V])`.
+- `cv2.inRange(hsv, lower, upper)`: Create masks for red.
+- `cv2.bitwise_or(mask1, mask2)`: Combine both masks.
+- `cv2.bitwise_and(frame, frame, mask=mask)`: Show only red areas.
+  
