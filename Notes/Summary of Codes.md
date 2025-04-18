@@ -77,3 +77,41 @@
 - `label.setText(...)`: Displays live distance in the GUI.
 
 ---
+
+### Lesson 5: OpenCV Camera & Drawing
+
+#### 📷 5.1 OpenCV Camera
+
+- **Install OpenCV**:  
+  Run `pip install opencv-python` to install the OpenCV library.
+
+- **Open the Camera**:  
+  Use `cap = cv2.VideoCapture(1)` to open the camera (use `0` for the default camera).
+
+- **Read Camera Feed**:  
+  `ret, frame = cap.read()` reads a single frame from the camera. `ret` is True if successful, `frame` is the captured image.
+
+- **Show the Feed**:  
+  Display the captured frame with `cv2.imshow("Webcam", frame)` in a window.
+
+- **Press 'q' to Quit**:  
+  Use `if cv2.waitKey(1) & 0xFF == ord('q'): break` to quit the loop when 'q' is pressed.
+
+- **Cleanup**:  
+  After exiting, release the camera with `cap.release()` and close all windows with `cv2.destroyAllWindows()`.
+
+---
+
+#### 5.2 OpenCV Drawing
+
+- **Draw a Rectangle**:  
+  Use `cv2.rectangle(frame, (50, 50), (200, 200), (255, 0, 0), 2)` to draw a blue rectangle (Note: Color is in BGR format, not RGB) on the camera feed. `(50, 50)` is the top-left corner, `(200, 200)` is the bottom-right corner, and `2` is the line thickness.
+
+- **Draw a Circle**:  
+  Use `cv2.circle(frame, (300, 200), 50, (0, 255, 0), 3)` to draw a green circle. `(300, 200)` is the center, `50` is the radius, and `3` is the border thickness.
+
+- **Add Text**:  
+  Use `cv2.putText(frame, 'Hello OpenCV', (50, 400), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)` to add the text "Hello OpenCV" at position `(50, 400)` in white color with a size of 1.
+
+- **Show Everything**:  
+  Finally, display the updated frame with `cv2.imshow("Webcam", frame)`.
