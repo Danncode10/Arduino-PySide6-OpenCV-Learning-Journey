@@ -1,32 +1,49 @@
-import cv2  # OpenCV library for image/video processing
-import mediapipe as mp  # MediaPipe library for hand detection
+import cv2
+import mediapipe as mp
 
-# Initialize drawing utilities and hand detection model from MediaPipe
-mp_drawing = mp.solutions.drawing_utils  # Utility to draw hand landmarks
-mp_drawing_styles = mp.solutions.drawing_styles  # Optional styling for drawing
-mphands = mp.solutions.hands  # Hand detection module from MediaPipe
+# Initialize MediaPipe Hands and Drawing utilities
+mp_drawing = mp.solutions.drawing_utils
+mp_drawing_styles = mp.solutions.drawing_styles
+mp_hands = mp.solutions.hands
 
-# Open video capture from the camera (camera index 1)
-cap = cv2.VideoCapture(1)  # Use camera with index 1 (adjust if needed)
-hands = mphands.Hands()  # Initialize hand detection model
+# Set up video capture
+cap = cv2.VideoCapture(0)
+
+# Initialize Hands detector
+hands = mp_hands.Hands()
 
 while True:
-    data, image = cap.read()  # Capture a frame from the camera
+    # Read a frame from the webcam
+    ret, image = cap.read()
 
-    # Flip the image horizontally to mirror it (like in a mirror)
+    if not ret:
+        break
+
+    # Flip the image horizontally for a mirror effect
     image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
 
-    # Process the image to detect hand landmarks
+    # Process the frame and get hand landmarks
     results = hands.process(image)
 
-    # Convert the image back to BGR for OpenCV (as OpenCV uses BGR format)
+    # Convert the image color back to BGR for OpenCV
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-    # Check if any hands are detected
+    # If hand landmarks are detected, draw them on the image
     if results.multi_hand_landmarks:
-        # Loop through all detected hands (in case more than one hand is detected)
         for hand_landmarks in results.multi_hand_landmarks:
-            # Draw the landmarks and connections on the image
             mp_drawing.draw_landmarks(
-                image,  # The image on which to draw
-                hand_landmarks,  # The_
+                image,
+                hand_landmarks,
+                mp_hands.HAND_CONNECTIONS
+            )
+
+    # Display the image with landmarks
+    cv2.imshow('Handtracker', image)
+
+    # Break the loop if 'q' is pressed
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Release the video capture and close the window
+cap.release()
+cv2.destroyAllWindows()

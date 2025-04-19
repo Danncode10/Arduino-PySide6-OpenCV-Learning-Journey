@@ -124,27 +124,71 @@
 - `cv2.bitwise_or(mask1, mask2)`: Combine both masks.
 - `cv2.bitwise_and(frame, frame, mask=mask)`: Show only red areas.
 
-### Lesson 7: Contours & Basic Hand Detection
+---
 
-#### 📦 **MediaPipe Hand Detection**
+### **Lesson 7: Contours & Basic Hand Detection**
 
-- **`mp.solutions.hands.Hands()`**: Initializes the hand detection model from MediaPipe, which helps in detecting hand landmarks and gestures.
-- **`hands.process(image)`**: Processes the input image and detects hands, returning landmarks if hands are found.
-- **`results.multi_hand_landmarks`**: Holds the landmarks of all detected hands (if any). It's a list where each item represents a hand and its detected key points (e.g., wrist, fingers).
-- **`mp_drawing.draw_landmarks(image, hand_landmarks, mphands.HAND_CONNECTIONS)`**: Draws the landmarks and connections between them on the image, visually representing the hand's shape and the relationships between finger joints.
+#### 🧠 MediaPipe Setup
 
-#### 🔄 **Image Manipulation**
+- `import mediapipe as mp`: Brings in the MediaPipe library to use hand tracking tools.
+- `mp_drawing = mp.solutions.drawing_utils`: Lets us draw hand points and lines on the screen.
+- `mp_drawing_styles = mp.solutions.drawing_styles`: Optional styles to make the hand drawing look nicer.
+- `mp_hands = mp.solutions.hands`: Shortcut to access the hand-tracking feature.
 
-- **`cv2.flip(image, 1)`**: Flips the image horizontally, which is useful for mirroring the webcam feed (like looking at yourself in a mirror).
-- **`cv2.cvtColor(image, cv2.COLOR_BGR2RGB)`**: Converts the image from BGR (default format used by OpenCV) to RGB (used by MediaPipe for processing).
-- **`cv2.cvtColor(image, cv2.COLOR_RGB2BGR)`**: Converts the image back to BGR format after processing so it can be displayed using OpenCV.
+---
 
-#### 📸 **Webcam Feed Handling**
+#### ✋ Start Hand Detection
 
-- **`cv2.VideoCapture(1)`**: Captures video from the webcam (camera index `1`, which could be the external camera if using multiple webcams).
-- **`cap.read()`**: Captures one frame (image) from the webcam feed.
-- **`cv2.imshow('Handtracker', image)`**: Displays the image with the hand landmarks drawn in a window titled "Handtracker".
-- **`cv2.waitKey(1)`**: Waits for a key press for 1 millisecond, ensuring smooth video display. If the 'q' key is pressed, it would break the loop and close the application.
+- `hands = mp_hands.Hands()`: Turns on the hand detector. It will look for hands in each video frame.
 
+---
 
-  
+#### 🔄 Flip + Convert Image
+
+```python
+image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
+```
+
+- `cv2.flip(image, 1)`: Flips the image left to right — like looking in a mirror.
+- `cv2.cvtColor(..., cv2.COLOR_BGR2RGB)`: Changes the color format because MediaPipe needs RGB, but OpenCV uses BGR.
+
+---
+
+#### 🤖 Process the Frame
+
+```python
+results = hands.process(image)
+```
+
+- Checks the image for hands.
+- If a hand is found, it saves the "landmarks" — little points on your fingers and palm.
+
+---
+
+#### 🎨 Draw the Hand
+
+```python
+if results.multi_hand_landmarks:
+    for hand_landmarks in results.multi_hand_landmarks:
+        mp_drawing.draw_landmarks(
+            image,
+            hand_landmarks,
+            mp_hands.HAND_CONNECTIONS
+        )
+```
+
+- `if results.multi_hand_landmarks`: Checks if any hands were found. Example if 2 hands are there in the camera it returns: [HandLandmark_1, HandLandmark_2]
+- `for hand_landmarks in ...`: Loops through each hand (in case you have two).
+- `mp_drawing.draw_landmarks(...)`: Draws dots on your hand and connects them with lines — so you can *see* the hand shape on screen.
+
+---
+
+#### 🎨 Convert Image Back
+
+```python
+image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+```
+
+- Turns the image back to BGR so OpenCV can show it properly in a window.
+
+---
