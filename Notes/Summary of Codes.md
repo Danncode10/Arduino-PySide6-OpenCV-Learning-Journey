@@ -192,3 +192,19 @@ image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 - Turns the image back to BGR so OpenCV can show it properly in a window.
 
 ---
+
+### Lesson 7.1: Contours
+
+| Code | Explanation |
+|------|-------------|
+| `cv2.VideoCapture(1)` | Opens your webcam (try 0 if 1 doesn't work) |
+| `cv2.cvtColor` | Converts image to grayscale |
+| `cv2.GaussianBlur` | Smooths image to remove noise |
+| `cv2.threshold` | Turns grayscale into black & white shapes |
+| `cv2.findContours` | Finds the outlines of the shapes |
+| `cv2.drawContours` | Draws the outlines on your image |
+| `cv2.imshow` | Shows the camera + contour drawing |
+| `cv2.waitKey(1)` | Updates the image every frame |
+| `cap.release()` | Closes webcam properly |
+| `cv2.destroyAllWindows()` | Closes all windows |
+
