@@ -1,7 +1,7 @@
 import cv2
 
 # Open webcam (0 or 1 depending on your camera index)
-cap = cv2.VideoCapture(0)  # You can try 0 if 1 doesn't work
+cap = cv2.VideoCapture(1)  # You can try 0 if 1 doesn't work
 
 while True:
     ret, frame = cap.read()

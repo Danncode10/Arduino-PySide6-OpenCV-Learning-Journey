@@ -7,7 +7,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 
 # Set up video capture
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 # Initialize Hands detector
 hands = mp_hands.Hands()
