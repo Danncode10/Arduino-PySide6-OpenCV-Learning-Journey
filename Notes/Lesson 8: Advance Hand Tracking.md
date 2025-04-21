@@ -150,6 +150,8 @@ tips = [4, 8, 12, 16, 20]
 ```
 These are the numbers (IDs) for the **tips** of each finger.
 
+**Note**: It onlt detects right hand because of the arrangement. If you want it to be left. It should be arranged like this. `tips = [20, 16, 12, 8, 4]`
+
 ---
 
 ### 🧤 Special Case: Thumb
@@ -234,6 +236,170 @@ def get_finger_states(hand_landmarks):
 
 ```
 
+---
+
+## 🧠 Step 3:  Map Finger States to Gestures
+
+The `detect_gesture()` function is used to **interpret the finger states** (whether each finger is "up" or "down") and **map them to a gesture** like "Fist", "Open Palm", "Peace", or "Point."
+
+Let’s break it down:
+
+---
+
+### 👆 **Finger States:**
+First, you need a list of **finger states**:
+- **1** means the finger is **up**.
+- **0** means the finger is **down**.
+
+So, for example:
+- `[1, 0, 0, 0, 0]` means:
+  - Thumb is **up**
+  - Index, Middle, Ring, and Pinky are **down**
+
+---
+
+### 🔎 **Mapping the Finger States to Gestures**
+
+Now, the `detect_gesture(finger_states)` function checks the **combination** of these states and **maps** them to a gesture:
+
+```python
+def detect_gesture(finger_states):
+    if finger_states == [0, 0, 0, 0, 0]:
+        return "Fist"  # All fingers down = Fist
+    elif finger_states == [1, 1, 1, 1, 1]:
+        return "Open Palm"  # All fingers up = Open Palm
+    elif finger_states == [0, 1, 1, 0, 0]:
+        return "Peace"  # Index + Middle up = Peace sign
+    elif finger_states == [0, 1, 0, 0, 0]:
+        return "Point"  # Only Index finger up = Point
+    else:
+        return "Unknown"  # Catch-all if it doesn't match any pattern
+```
+
+---
+
+### 🔢 **How the Finger States Match Gestures:**
+
+1. **Fist:**
+   - `[0, 0, 0, 0, 0]` means **all fingers down** (fist).
+   - No finger is raised.
+   
+   **Gesture:** `"Fist"`
+
+2. **Open Palm:**
+   - `[1, 1, 1, 1, 1]` means **all fingers up** (open palm).
+   - Every finger is extended.
+   
+   **Gesture:** `"Open Palm"`
+
+3. **Peace:**
+   - `[0, 1, 1, 0, 0]` means:
+     - **Thumb is down**
+     - **Index and Middle fingers are up** (Peace sign).
+     - **Ring and Pinky fingers are down**.
+   
+   **Gesture:** `"Peace"`
+
+4. **Point:**
+   - `[0, 1, 0, 0, 0]` means:
+     - **Thumb is down**
+     - **Index is up** (pointing).
+     - **Middle, Ring, and Pinky are down**.
+   
+   **Gesture:** `"Point"`
+
+---
+
+### 💡 Why This Works:
+
+- The `finger_states` list represents whether each finger is "up" or "down."
+- The function compares the list with specific patterns that we know represent different gestures (e.g., "Fist", "Open Palm").
+- If the pattern matches, it returns the corresponding gesture name (as a string).
+
+---
+
+
+## 🧪 Step 4: Combine with Your Code
+
+Here's the full updated version: `python/opencv/lesson8_advance_hand_tracking.py`
+
+```python
+import cv2
+import mediapipe as mp
+
+# Initialize MediaPipe
+mp_drawing = mp.solutions.drawing_utils
+mp_hands = mp.solutions.hands
+
+# Gesture utility
+def get_finger_states(hand_landmarks):
+    tips = [4, 8, 12, 16, 20]
+    fingers = []
+
+    # Thumb: check x axis
+    if hand_landmarks.landmark[tips[0]].x < hand_landmarks.landmark[tips[0] - 1].x:
+        fingers.append(1)
+    else:
+        fingers.append(0)
+
+    # Other fingers: check y axis
+    for tip_id in tips[1:]:
+        if hand_landmarks.landmark[tip_id].y < hand_landmarks.landmark[tip_id - 2].y:
+            fingers.append(1)
+        else:
+            fingers.append(0)
+
+    return fingers
+
+def detect_gesture(finger_states):
+    if finger_states == [0, 0, 0, 0, 0]:
+        return "Fist"
+    elif finger_states == [1, 1, 1, 1, 1]:
+        return "Open Palm"
+    elif finger_states == [0, 1, 1, 0, 0]:
+        return "Peace"
+    elif finger_states == [0, 1, 0, 0, 0]:
+        return "Point"
+    else:
+        return "Unknown"
+
+# Open webcam
+cap = cv2.VideoCapture(1)
+
+with mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.5) as hands:
+    while cap.isOpened():
+        success, frame = cap.read()
+        if not success:
+            break
+
+        # Flip and convert
+        frame = cv2.flip(frame, 1)
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+        # Process frame
+        result = hands.process(rgb_frame)
+
+        if result.multi_hand_landmarks:
+            for hand_landmarks in result.multi_hand_landmarks:
+                # Draw landmarks
+                mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+                # Detect gesture
+                finger_states = get_finger_states(hand_landmarks)
+                gesture = detect_gesture(finger_states)
+
+                # Print gesture on screen
+                cv2.putText(frame, f'Gesture: {gesture}', (10, 30),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+        cv2.imshow('MediaPipe Gesture', frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+cap.release()
+cv2.destroyAllWindows()
+```
 ---
 
 
