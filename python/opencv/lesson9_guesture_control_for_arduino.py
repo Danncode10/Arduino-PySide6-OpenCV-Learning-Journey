@@ -1,5 +1,11 @@
 import cv2
 import mediapipe as mp
+import serial
+import time
+
+# Connect to the Arduino through the USB port
+arduino = serial.Serial(port='/dev/cu.usbserial-1140', baudrate=9600, timeout=1)
+time.sleep(2)  # Give Arduino time to reset
 
 # Initialize MediaPipe
 mp_drawing = mp.solutions.drawing_utils
@@ -27,21 +33,23 @@ def get_finger_states(hand_landmarks):
 
 def detect_gesture(finger_states):
     if finger_states == [0, 0, 0, 0, 0]:
-        return "Fist"
+        arduino.write(b'0') # -------------------> Sends '0' to the Arduino
+        return "Zero"
+    elif finger_states == [0, 0, 0, 0, 1]:
+        arduino.write(b'1')
+        return "One"
+    elif finger_states == [0, 0, 0, 1, 1]:
+        arduino.write(b'2')
+        return "Two"
+    elif finger_states == [0, 0, 1, 1, 1]:
+        arduino.write(b'3')
+        return "Three"
+    elif finger_states == [0, 1, 1, 1, 1]:
+        arduino.write(b'4')
+        return "Four"
     elif finger_states == [1, 1, 1, 1, 1]:
-        return "Open Palm"
-    elif finger_states == [0, 1, 1, 0, 0]:
-        return "Peace"
-    elif finger_states == [0, 1, 0, 0, 0]:
-        return "Point"
-    # elif finger_states == [0, 0, 0, 0, 1]:
-    #     return "One"
-    # elif finger_states == [0, 0, 0, 1, 1]:
-    #     return "Two"
-    # elif finger_states == [0, 0, 1, 1, 1]:
-    #     return "Three"
-    # elif finger_states == [0, 1, 1, 1, 1]:
-    #     return "Four"
+        arduino.write(b'5')
+        return "Five"
     else:
         return "Unknown"
 
