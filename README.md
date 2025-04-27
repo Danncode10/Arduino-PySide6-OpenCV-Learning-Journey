@@ -11,7 +11,9 @@ I started with basic Arduino knowledge and some GUI development experience using
 - Build a system where a Python application detects hand gestures using OpenCV (and MediaPipe) and sends commands to Arduino to control components.
 - Combine GUI control with computer vision in a single Python interface using PySide6.
 
-![demo.gif](Notes/img/demo.gif)
+<p align="center">
+  <img src="Notes/img/demo.gif" alt="demo.gif" width="400">
+</p>
 
 ---
 
